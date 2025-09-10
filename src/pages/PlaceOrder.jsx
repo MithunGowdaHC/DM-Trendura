@@ -87,13 +87,24 @@ const PlaceOrder = () => {
 
           </div>
 
-          <div className=" w-full text-end mt-8">
-            <button onClick={()=>navigate('/orders')} className =" bg-black text-white  px-16 py-3 text-sm">
-              PLACE ORDER
+         <div className="w-full text-end mt-8">
+  <button
+    onClick={() => {
+      // Fire GA4 event
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "place_order"
+      });
 
-            </button>
+      // Navigate to orders page
+      navigate("/orders");
+    }}
+    className="bg-black text-white px-16 py-3 text-sm"
+  >
+    PLACE ORDER
+  </button>
+</div>
 
-          </div>
 
         </div>
 
