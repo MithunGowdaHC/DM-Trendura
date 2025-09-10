@@ -43,18 +43,25 @@ const Contact = () => {
         body: JSON.stringify(formData),
       })
 
-      if (response.ok) {
-        setSubmitStatus({
-          type: "success",
-          message: "Thank you! Redirecting...",
-        })
-        setFormData({ name: "", email: "", message: "" })
+    if (response.ok) {
+  setSubmitStatus({
+    type: "success",
+    message: "Thank you! Redirecting...",
+  });
+  setFormData({ name: "", email: "", message: "" });
 
-        // Redirect to Thank You page
-        setTimeout(() => {
-          window.location.href = "/thank-you"
-        }, 1000)
-      } else {
+  // --- GA4 Event Push ---
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "form_submit"
+  });
+
+  // Redirect to Thank You page
+  setTimeout(() => {
+    window.location.href = "/thank-you";
+  }, 1000);
+}
+else {
         throw new Error("Failed to send message")
       }
     } catch (error) {
