@@ -3,6 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+import { pushEcomEvent } from "../utils/gtm";
 
 const Product = () => {
   const { productId } = useParams();
@@ -82,6 +83,21 @@ const Product = () => {
                 alert("Please select a size before adding to cart");
                 return;
               }
+              window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "add_to_cart",
+    ecommerce: {
+      items: [
+        {
+          item_id: productData._id,
+          item_name: productData.name,
+          price: productData.price,
+          currency: currency,
+          item_variant: size
+        }
+      ]
+    }
+  });
               addToCart(productData._id, size);
               navigate("/cart");
             }}
